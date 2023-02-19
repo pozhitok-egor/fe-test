@@ -1,0 +1,1 @@
+export type ModeModalAction = 'create' | 'delete' | 'rename';
