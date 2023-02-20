@@ -1,10 +1,10 @@
 import { TreeNode } from '@entities/treeNode';
-import ky from 'ky';
+import fetchApi from '@entities/fetchApi';
 import { useQuery } from 'react-query';
 
 function getNode() {
-  return ky
-    .get(`${import.meta.env.VITE_API_URL}/api.user.tree.get`, {
+  return fetchApi
+    .get('api.user.tree.get', {
       searchParams: { treeName: import.meta.env.VITE_NODE_NAME },
     })
     .json<TreeNode>();

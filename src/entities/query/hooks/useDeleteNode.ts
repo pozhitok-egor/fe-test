@@ -1,12 +1,14 @@
 import { DeleteParams } from '../types';
-import ky from 'ky';
+import fetchApi from '@entities/fetchApi';
 import { queryClient } from '../QueryProvider';
 import { useMutation } from 'react-query';
 
 function deleteNode(params: DeleteParams) {
-  return ky.post(`${import.meta.env.VITE_API_URL}/api.user.tree.node.delete`, {
-    searchParams: params,
-  });
+  return fetchApi
+    .post('api.user.tree.node.delete', {
+      searchParams: params,
+    })
+    .json();
 }
 
 export function useDeleteNode() {

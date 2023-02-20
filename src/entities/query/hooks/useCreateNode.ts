@@ -1,12 +1,14 @@
 import { CreateParams } from '../types';
-import ky from 'ky';
+import fetchApi from '@entities/fetchApi';
 import { queryClient } from '../QueryProvider';
 import { useMutation } from 'react-query';
 
 function createNode(params: CreateParams) {
-  return ky.post(`${import.meta.env.VITE_API_URL}/api.user.tree.node.create`, {
-    searchParams: params,
-  });
+  return fetchApi
+    .post('api.user.tree.node.create', {
+      searchParams: params,
+    })
+    .json();
 }
 
 export function useCreateNode() {
