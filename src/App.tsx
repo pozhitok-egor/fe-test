@@ -11,7 +11,7 @@ import { TreeNode } from '@entities/treeNode';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
 
-const treeName = import.meta.env.VITE_NODE_NAME;
+const treeName = process.env.VITE_NODE_NAME as string;
 
 function App() {
   const { data, isLoading, error: getError } = useTree();
