@@ -5,7 +5,7 @@ import { useQuery } from 'react-query';
 function getNode() {
   return fetchApi
     .get('api.user.tree.get', {
-      searchParams: { treeName: process.env.VITE_NODE_NAME as string },
+      searchParams: { treeName: import.meta.env.VITE_NODE_NAME },
     })
     .json<TreeNode>();
 }

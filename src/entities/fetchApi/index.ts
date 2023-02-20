@@ -1,7 +1,7 @@
 import ky from 'ky';
 
 const fetchApi = ky.create({
-  prefixUrl: process.env.VITE_API_URL as string,
+  prefixUrl: import.meta.env.VITE_API_URL,
   hooks: {
     afterResponse: [
       async (_input, _options, response) => {
