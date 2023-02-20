@@ -24,8 +24,8 @@ jobs:
   # Single deploy job since we're just deploying
   deploy:
     env:
-      API_URL: ${{ secrets.API_URL }}
-      NODE_NAME: ${{ secrets.NODE_NAME }}
+      VITE_API_URL: ${{ secrets.API_URL }}
+      VITE_NODE_NAME: ${{ secrets.NODE_NAME }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -43,8 +43,8 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          API_URL: ${{ secrets.API_URL }}
-          NODE_NAME: ${{ secrets.NODE_NAME }}
+          VITE_API_URL: ${{ secrets.API_URL }}
+          VITE_NODE_NAME: ${{ secrets.NODE_NAME }}
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact
