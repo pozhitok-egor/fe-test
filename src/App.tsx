@@ -1,36 +1,39 @@
-import {faSpinner} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {useState} from "react";
-import styled from "styled-components";
+import React, { useState } from 'react';
 import {
-  useTree,
-  TreeNode,
   useCreateNode,
-  useRenameNode,
   useDeleteNode,
-} from "./modules/api";
-import NodeItem from "./shared/ui/NoteItem/NodeItem";
+  useRenameNode,
+  useTree,
+} from '@entities/query';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { NodeItem } from '@features/NodeItem';
+import { TreeNode } from '@entities/treeNode';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import styled from 'styled-components';
 
 const treeName = import.meta.env.VITE_NODE_NAME;
 
 function App() {
-  const {data, isLoading} = useTree();
+  const { data, isLoading, error: getError } = useTree();
   const [selectedNodeId, setSelectedNodeId] = useState<string>();
-  const {createNode, isError: createError} = useCreateNode();
-  const {renameNode, isError: renameError} = useRenameNode();
-  const {deleteNode, isError: deleteError} = useDeleteNode();
-  const error = createError || renameError || deleteError;
+  const { createNode, error: createError } = useCreateNode();
+  const { renameNode, error: renameError } = useRenameNode();
+  const { deleteNode, error: deleteError } = useDeleteNode();
+  const error = (getError ||
+    createError ||
+    renameError ||
+    deleteError) as Error;
 
   const handleCreateNode = (parentNodeId: string, nodeName: string) => {
-    createNode({nodeName, parentNodeId, treeName});
+    createNode({ nodeName, parentNodeId, treeName });
   };
 
   const handleDeleteNode = (nodeId: string) => {
-    deleteNode({treeName, nodeId});
+    deleteNode({ treeName, nodeId });
   };
 
   const handleRenameNode = (nodeId: string, newNodeName: string) => {
-    renameNode({newNodeName, nodeId, treeName});
+    renameNode({ newNodeName, nodeId, treeName });
   };
 
   const handleSelectNode = (node: TreeNode) => {
@@ -47,18 +50,20 @@ function App() {
   return (
     <AppContainer>
       <TreeContainer>
-        {data && (
-          <NodeItem
-            depth={0}
-            selectedNodeId={selectedNodeId}
-            onSelect={handleSelectNode}
-            onCreate={handleCreateNode}
-            onDelete={handleDeleteNode}
-            onRename={handleRenameNode}
-            node={data}
-          ></NodeItem>
-        )}
-        {error && <ErrorMessage>{error}</ErrorMessage>}
+        <>
+          {data && (
+            <NodeItem
+              depth={0}
+              selectedNodeId={selectedNodeId}
+              onSelect={handleSelectNode}
+              onCreate={handleCreateNode}
+              onDelete={handleDeleteNode}
+              onRename={handleRenameNode}
+              node={data}
+            ></NodeItem>
+          )}
+          {error && <ErrorMessage>{error.message}</ErrorMessage>}
+        </>
       </TreeContainer>
     </AppContainer>
   );
@@ -75,7 +80,7 @@ const Loader = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-`
+`;
 
 const TreeContainer = styled.div`
   display: flex;

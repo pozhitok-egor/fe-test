@@ -1,5 +1,5 @@
-import styled from 'styled-components';
 import React, { ButtonHTMLAttributes } from 'react';
+import styled from 'styled-components';
 
 type ButtonTypes = 'primary' | 'cancelling' | 'applying';
 
@@ -36,7 +36,8 @@ const StyledButton = styled.button<{
   border: none;
   border-radius: 10px;
   background-color: ${({ styleType }) =>
-      styleType === 'applying' ? '#27AE60'
+    styleType === 'applying'
+      ? '#27AE60'
       : styleType === 'cancelling'
       ? '#EB5757'
       : '#1e1e1e'};
